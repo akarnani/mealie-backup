@@ -28,10 +28,27 @@ This repository contains a simple tool and a Helm chart to automate backups of y
 - **Lint**: Runs on every push to `main` and pull requests. Lints Python code and the Helm chart.
 - **Publish**: Runs on new version tags (e.g. `v1.0.0`). Builds/pushes the Docker image and publishes the Helm chart using `chart-releaser`.
 
-## Deployment
-```bash
-helm install mealie-backup ./chart/mealie-backup \
-  --set mealie.url="https://mealie.yourdomain.com" \
-  --set mealie.token="YOUR_API_TOKEN" \
-  --set backup.hostPath="/mnt/backups/mealie"
-```
+## Deployment (Secure Method)
+
+To keep your Mealie API token secure and out of Helm history, follow these steps:
+
+1. **Create the Namespace**:
+   ```bash
+   kubectl create namespace mealie-backup
+   ```
+
+2. **Add Your Token as a Secret**:
+   ```bash
+   kubectl create secret generic mealie-token \
+     --from-literal=token="YOUR_ADMIN_API_TOKEN" \
+     -n mealie-backup
+   ```
+
+3. **Install the Chart**:
+   ```bash
+   helm install mealie-backup ./chart/mealie-backup \
+     -n mealie-backup \
+     --set mealie.url="https://mealie.yourdomain.com" \
+     --set mealie.existingSecret="mealie-token" \
+     --set backup.hostPath="/Users/andrew/mealie-backups"
+   ```
