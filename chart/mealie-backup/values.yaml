@@ -8,6 +8,7 @@ image:
 mealie:
   url: "https://demo.mealie.io"
   # token: "my-secret-token" # Set via secret or cli override
+  existingSecret: "" # If provided, Helm will NOT create a secret and use this one instead.
 
 # Backup configuration
 backup:

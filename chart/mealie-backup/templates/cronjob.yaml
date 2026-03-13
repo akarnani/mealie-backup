@@ -20,7 +20,7 @@ spec:
             - name: MEALIE_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "mealie-backup.fullname" . }}-token
+                  name: {{ .Values.mealie.existingSecret | default (printf "%s-token" (include "mealie-backup.fullname" . )) }}
                   key: token
             - name: BACKUP_PATH
               value: {{ .Values.backup.mountPath | quote }}
