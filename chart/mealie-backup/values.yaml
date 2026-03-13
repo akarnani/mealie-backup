@@ -1,0 +1,35 @@
+# Image configuration
+image:
+  repository: mealie-backup
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Mealie configuration
+mealie:
+  url: "https://demo.mealie.io"
+  # token: "my-secret-token" # Set via secret or cli override
+
+# Backup configuration
+backup:
+  # Host path where backups will be stored (on the Kubernetes node)
+  hostPath: "/opt/mealie/backups"
+  # Mount path inside the container
+  mountPath: "/backups"
+  # Fixed filename for the local download (will overwrite each time)
+  filename: "mealie-backup-latest.zip"
+  # How many backups to keep on the Mealie server before deleting old ones
+  keepCount: 5
+  # Success URL for notification (e.g. Healthchecks.io)
+  successUrl: ""
+
+# CronJob schedule
+cronSchedule: "0 2 * * *" # Daily at 2 AM
+
+# Resource limits/requests
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi

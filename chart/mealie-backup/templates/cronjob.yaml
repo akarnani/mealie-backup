@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "mealie-backup.fullname" . }}
+  labels:
+    {{- include "mealie-backup.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.cronSchedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            env:
+            - name: MEALIE_URL
+              value: {{ .Values.mealie.url | quote }}
+            - name: MEALIE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "mealie-backup.fullname" . }}-token
+                  key: token
+            - name: BACKUP_PATH
+              value: {{ .Values.backup.mountPath | quote }}
+            - name: BACKUP_FILENAME
+              value: {{ .Values.backup.filename | quote }}
+            - name: KEEP_BACKUPS
+              value: {{ .Values.backup.keepCount | quote }}
+            - name: SUCCESS_URL
+              value: {{ .Values.backup.successUrl | quote }}
+            volumeMounts:
+            - name: backups-dir
+              mountPath: {{ .Values.backup.mountPath | quote }}
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+          volumes:
+          - name: backups-dir
+            hostPath:
+              path: {{ .Values.backup.hostPath | quote }}
+              type: DirectoryOrCreate
+          restartPolicy: OnFailure
