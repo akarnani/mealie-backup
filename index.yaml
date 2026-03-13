@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  mealie-backup:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-03-13T05:52:26.437890021Z"
+    description: A Helm chart to automate Mealie backups as a CronJob.
+    digest: c0879e5bbc14c5e84cc900cbbe6d73f4a5ed4e1890ca5a8f013a76e288ce4ce9
+    name: mealie-backup
+    type: application
+    urls:
+    - https://github.com/akarnani/mealie-backup/releases/download/mealie-backup-0.1.1/mealie-backup-0.1.1.tgz
+    version: 0.1.1
+generated: "2026-03-13T05:52:26.43791627Z"
