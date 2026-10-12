@@ -1,6 +1,6 @@
 # Image configuration
 image:
-  repository: mealie-backup
+  repository: akarnani/mealie-backup
   tag: latest
   pullPolicy: IfNotPresent
 
