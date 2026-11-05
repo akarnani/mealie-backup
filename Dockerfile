@@ -1,5 +1,5 @@
 # Use stable Python 3.14 (released Oct 2025)
-FROM python:3.14.3-slim
+FROM python:3.14.10-slim
 
 WORKDIR /app
 

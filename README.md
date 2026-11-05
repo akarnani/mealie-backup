@@ -11,7 +11,7 @@ This repository contains a simple tool and a Helm chart to automate backups of y
 
 ## Components
 - `src/backup.py`: Python script that performs the backup operations.
-- `Dockerfile`: Container image based on Python 3.14 (experimental).
+- `Dockerfile`: Container image based on Python 3.14.
 - `chart/mealie-backup`: Helm chart for deploying the backup job.
 
 ## Configuration (Helm Values)
